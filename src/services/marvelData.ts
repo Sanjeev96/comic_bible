@@ -3,9 +3,9 @@ import { BaseModel, ComicDataSetModal } from "../models/marvelApi.model";
 
 const CryptoJS = require("crypto-js");
 
-const baseUrl = "https://gateway.marvel.com/v1/public";
-const publicKey = "00bce6118add5056f6f4e9a5d59dc35c";
-const privateKey = "90ba1a8162fababb9f40b1b70fd5bcd048eb2e43";
+const baseUrl = process.env.REACT_APP_BASE_URL;
+const publicKey = process.env.REACT_APP_PUBLIC_KEY;
+const privateKey: any = process.env.REACT_APP_PRIVATE_KEY;
 const ts = new Date().getTime();
 const hash = CryptoJS.MD5(ts + privateKey + publicKey).toString();
 const key = `&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
