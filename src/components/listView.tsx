@@ -31,8 +31,6 @@ export const ListView: React.FC<any> = (props: {
   const comics = props.comics;
   const classes = useStyles();
 
-  // console.log(comics);
-
   return (
     <>
       <Grid spacing={10} container className={classes.comicContainer}>
