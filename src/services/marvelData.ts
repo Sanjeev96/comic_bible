@@ -1,11 +1,11 @@
 import axios from "axios";
 import { BaseModel, ComicDataSetModal } from "../models/marvelApi.model";
 
-const CryptoJS = require("crypto-js");
+import CryptoJS from "crypto-js";
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
-const publicKey = process.env.REACT_APP_PUBLIC_KEY;
-const privateKey: any = process.env.REACT_APP_PRIVATE_KEY;
+const baseUrl = import.meta.env.VITE_BASE_URL;
+const publicKey = import.meta.env.VITE_PUBLIC_KEY;
+const privateKey: any = import.meta.env.VITE_PRIVATE_KEY;
 const ts = new Date().getTime();
 const hash = CryptoJS.MD5(ts + privateKey + publicKey).toString();
 const key = `&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
