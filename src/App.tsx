@@ -9,8 +9,16 @@ import { RecentComicsApi, SearchSeriesApi } from "./services/marvelData";
 import { useStore } from "./services/state/hooks/useStore";
 
 const useStyles = makeStyles(() => ({
-  appCanvas: {
-    overflowX: "hidden",
+  navbarContainer: {
+    padding: "0px 0px 15px 5px",
+    backgroundColor: "#2E2E2E",
+    color: "#FFF",
+    background: "linear-gradient(to left, #5C5C5C, #171717) right",
+  },
+  comicContainer: {
+    justifyContent: "center",
+    textAlign: "center",
+    marginTop: "70px",
   },
 }));
 
@@ -46,13 +54,13 @@ export const App: React.FC = observer(() => {
   }, [fetchSearchedComics]);
 
   return (
-    <Box className={classes.appCanvas}>
+    <>
       <Grid container xs={12}>
-        <Grid xs={12} item>
+        <Grid xs={12} className={classes.navbarContainer} item>
           <Header />
         </Grid>
       </Grid>
-      <Grid xs={12}>
+      <Grid className={classes.comicContainer} xs={12}>
         {loading && <LoadingSpinner />}
         {!search ? (
           <ListView comics={recentComics} />
@@ -61,7 +69,7 @@ export const App: React.FC = observer(() => {
         )}
       </Grid>
       {/* <ListView /> */}
-    </Box>
+    </>
   );
 });
 

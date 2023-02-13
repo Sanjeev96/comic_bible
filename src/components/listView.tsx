@@ -3,12 +3,6 @@ import React from "react";
 import { ComicDataSetModal } from "../models/marvelApi.model";
 
 const useStyles = makeStyles(() => ({
-  comicContainer: {
-    justifyContent: "center",
-    textAlign: "center",
-    marginTop: "70px",
-  },
-
   comicImage: {
     borderRadius: "8px",
     boxShadow:
@@ -33,16 +27,9 @@ export const ListView: React.FC<any> = (props: {
 
   return (
     <>
-      <Grid spacing={10} container className={classes.comicContainer}>
+      <Grid container>
         {comics.map((comic: ComicDataSetModal) => (
-          <Grid
-            key={comic.id}
-            item
-            style={{ padding: "0px" }}
-            xs={10}
-            sm={6}
-            md={4}
-          >
+          <Grid key={comic.id} item xs={10} sm={6} md={4}>
             <img
               className={classes.comicImage}
               width="250px"
