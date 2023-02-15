@@ -34,16 +34,14 @@ export const App: React.FC = observer(() => {
 
   const fetchRecentComics = async () => {
     setLoading(true);
-    const dataRecent = await RecentComicsApi();
-    setRecentComics(dataRecent);
+    setRecentComics(await RecentComicsApi());
     setLoading(false);
   };
 
   const fetchSearchedComics = useCallback(async () => {
     if (search !== "" || search === null) {
       setLoading(true);
-      const dataSearched = await SearchSeriesApi(getSearch);
-      setSearchedComics(dataSearched);
+      setSearchedComics(await SearchSeriesApi(getSearch));
       setLoading(false);
     }
   }, [getSearch, search]);
