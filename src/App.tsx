@@ -41,8 +41,12 @@ export const App: React.FC = observer(() => {
   const fetchSearchedComics = useCallback(async () => {
     if (search !== "" || search === null) {
       setLoading(true);
-      setSearchedComics(await SearchSeriesApi(getSearch));
-      setLoading(false);
+      setSearchedComics(
+        await SearchSeriesApi(getSearch).finally(() => {
+          setLoading(false);
+        })
+      );
+      // setLoading(false);
     }
   }, [getSearch, search]);
 
