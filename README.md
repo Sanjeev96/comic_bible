@@ -1,5 +1,7 @@
 # Comic bible
 
+Develop branch is the working branch
+
 This project is for learning purposes/my own enjoyment as I love to read comics
 
 ## Available Scripts
