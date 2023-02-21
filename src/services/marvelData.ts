@@ -21,10 +21,10 @@ const key = `&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 //   });
 // };
 
-export const SearchSeriesApi = async (titleName: string) => {
+export const SearchSeriesApi = (titleName: string) => {
   const titleUrl = `/comics?&title=${titleName}&format=comic&formatType=comic&noVariants=true&orderBy=-onsaleDate`;
   const requestUrl = baseUrl + titleUrl + key;
-  return await axios
+  return axios
     .get(requestUrl)
     .then((response: BaseModel) => {
       return response.data.data.results.filter(
@@ -42,7 +42,7 @@ export const SearchSeriesApi = async (titleName: string) => {
     .catch((error) => console.error(`Title comics Error: ${error}`));
 };
 
-export const RecentComicsApi = async () => {
+export const RecentComicsApi = () => {
   let currentDate = new Date().toLocaleDateString("en-CA");
   let date = new Date();
   date.setDate(date.getDate() - 730);
@@ -50,7 +50,7 @@ export const RecentComicsApi = async () => {
 
   const recentComicsUrl = `/comics?&format=comic&formatType=comic&noVariants=true&dateRange=${dateMinusTwoYears}%2C${currentDate}&orderBy=-onsaleDate`;
   const requestUrl = baseUrl + recentComicsUrl + key;
-  return await axios
+  return axios
     .get(requestUrl)
     .then((response: BaseModel) => {
       return response.data.data.results.map(
