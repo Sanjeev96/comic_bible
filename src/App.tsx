@@ -34,7 +34,11 @@ export const App: React.FC = observer(() => {
 
   const fetchRecentComics = async () => {
     setLoading(true);
+    console.log("before");
+
     setRecentComics(await RecentComicsApi());
+    console.log("After");
+
     setLoading(false);
   };
 
