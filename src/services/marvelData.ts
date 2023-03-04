@@ -21,28 +21,29 @@ const key = `&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 //   });
 // };
 
-export const SearchSeriesApi = (titleName: string) => {
+export const SearchSeriesApi = async (titleName: string) => {
   const titleUrl = `/comics?&title=${titleName}&format=comic&formatType=comic&noVariants=true&orderBy=-onsaleDate`;
   const requestUrl = baseUrl + titleUrl + key;
-  return axios
-    .get(requestUrl)
-    .then((response: BaseModel) => {
-      return response.data.data.results.filter(
-        (recentComics: ComicDataSetModal) => {
-          const dataSet = [];
-          dataSet.push(
-            recentComics.title,
-            recentComics.dates[0],
-            recentComics.thumbnail.path
-          );
-          return dataSet;
-        }
+
+  const searchedComic = await (await axios.get(requestUrl)).data.data.results;
+
+  try {
+    return searchedComic.filter((recentComics: ComicDataSetModal) => {
+      const dataSet = [];
+      dataSet.push(
+        recentComics.title,
+        recentComics.dates[0],
+        recentComics.thumbnail.path
       );
-    })
-    .catch((error) => console.error(`Title comics Error: ${error}`));
+      return dataSet;
+    });
+  } catch (error) {
+    console.error(`Searched series Error: ${error}`);
+  } finally {
+    console.warn("call for Searched series successful");
+  }
 };
 
-// async /await
 export const RecentComicsApi = async () => {
   let currentDate = new Date().toLocaleDateString("en-CA");
   let date = new Date();
@@ -55,56 +56,21 @@ export const RecentComicsApi = async () => {
   try {
     const comicData = (await axios.get(requestUrl)).data.data.results;
 
-    return Promise.all(
-      comicData.map((recentComics: ComicDataSetModal) => {
-        console.log(recentComics, "during");
-        const dataSet: ComicDataSetModal = {
-          id: recentComics.id,
-          title: recentComics.title,
-          thumbnail: recentComics.thumbnail,
-          dates: recentComics.dates.filter((d) => {
-            return d.date ? d.type === "onsaleDate" : [];
-          }),
-        };
+    return comicData.map((recentComics: ComicDataSetModal) => {
+      const dataSet: ComicDataSetModal = {
+        id: recentComics.id,
+        title: recentComics.title,
+        thumbnail: recentComics.thumbnail,
+        dates: recentComics.dates.filter((d) => {
+          return d.date ? d.type === "onsaleDate" : [];
+        }),
+      };
 
-        return dataSet;
-      })
-    );
+      return dataSet;
+    });
   } catch (error) {
     console.error(`Recent comics Error: ${error}`);
   } finally {
-    console.info("call for recent comics successful");
+    console.warn("call for recent comics successful");
   }
 };
-
-// .then()
-// export const RecentComicsApi = () => {
-//   let currentDate = new Date().toLocaleDateString("en-CA");
-//   let date = new Date();
-//   date.setDate(date.getDate() - 730);
-//   let dateMinusTwoYears = date.toLocaleDateString("en-CA");
-
-//   const recentComicsUrl = `/comics?&format=comic&formatType=comic&noVariants=true&dateRange=${dateMinusTwoYears}%2C${currentDate}&orderBy=-onsaleDate`;
-//   const requestUrl = baseUrl + recentComicsUrl + key;
-//   return axios
-//     .get(requestUrl)
-//     .then((response: BaseModel) => {
-//       // console.log("during");
-
-//       return response.data.data.results.map(
-//         (recentComics: ComicDataSetModal) => {
-//           const dataSet: ComicDataSetModal = {
-//             id: recentComics.id,
-//             title: recentComics.title,
-//             thumbnail: recentComics.thumbnail,
-//             dates: recentComics.dates.filter((d) => {
-//               return d.date ? d.type === "onsaleDate" : [];
-//             }),
-//           };
-
-//           return dataSet;
-//         }
-//       );
-//     })
-//     .catch((error) => console.error(`Recent comics Error: ${error}`));
-// };
