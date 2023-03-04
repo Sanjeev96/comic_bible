@@ -34,10 +34,8 @@ export const App: React.FC = observer(() => {
 
   const fetchRecentComics = async () => {
     setLoading(true);
-    console.log("before");
 
     setRecentComics(await RecentComicsApi());
-    console.log("After");
 
     setLoading(false);
   };
@@ -50,9 +48,12 @@ export const App: React.FC = observer(() => {
           setLoading(false);
         })
       );
-      // setLoading(false);
     }
   }, [getSearch, search]);
+
+  // useEffect(() => {
+  //   fetchRecentComics();
+  // }, []);
 
   useEffect(() => {
     fetchRecentComics();
@@ -66,7 +67,7 @@ export const App: React.FC = observer(() => {
           <Header />
         </Grid>
       </Grid>
-      <Grid className={classes.comicContainer} xs={12}>
+      <Grid className={classes.comicContainer} item xs={12}>
         {loading && <LoadingSpinner />}
         {!search ? (
           <ListView comics={recentComics} />
