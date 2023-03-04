@@ -14,6 +14,8 @@
     "@types/jest": "^27.5.2",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "@types/react-redux": "^7.1.25",
+    "@types/redux": "^3.6.0",
     "axios": "^0.27.2",
     "crypto-js": "^4.1.1",
     "formik": "^2.2.9",
@@ -23,7 +25,9 @@
     "mobx-state-tree": "5.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-router": "^6.8.0",
+    "redux": "^4.2.1",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
