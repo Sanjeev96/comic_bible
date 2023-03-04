@@ -29,7 +29,7 @@ export const ListView: React.FC<any> = (props: {
     <>
       <Grid container>
         {comics.map((comic: ComicDataSetModal) => (
-          <Grid key={comic.id} item xs={10} sm={6} md={4}>
+          <Grid key={comic.id} item xs={12} sm={6} md={4}>
             <img
               className={classes.comicImage}
               width="250px"
