@@ -44,7 +44,7 @@ export const Header: React.FC = () => {
   return (
     <form id="searchForm" onSubmit={formikSubmit.handleSubmit}>
       <Grid className={classes.navbarCanvas} container alignItems="center">
-        <Grid style={{ textAlign: "center" }} xs={4} md={3}>
+        <Grid style={{ textAlign: "center" }} item xs={4} md={3}>
           <Typography>Comic Bible</Typography>
         </Grid>
         <Grid style={{ textAlign: "center" }} item xs={4} md={3}>
@@ -53,7 +53,7 @@ export const Header: React.FC = () => {
         <Grid style={{ textAlign: "center" }} item xs={4} md={3}>
           <Typography>About us</Typography>
         </Grid>
-        <Grid item xs={12} md={3} spacing={2}>
+        <Grid item xs={12} md={3}>
           <OutlinedInput
             onChange={formikSubmit.handleChange}
             id="search"
