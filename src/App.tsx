@@ -6,7 +6,7 @@ import { Header } from "./components/header";
 import { ListView } from "./components/listView";
 import { LoadingSpinner } from "./components/loadingSpinnner";
 import { RecentComicsApi, SearchSeriesApi } from "./services/marvelData";
-import { useStore } from "./services/state/hooks/useStore";
+import { useAppSelector } from "./services/state/hooks/store";
 
 const useStyles = makeStyles(() => ({
   navbarContainer: {
@@ -24,9 +24,8 @@ const useStyles = makeStyles(() => ({
 
 export const App: React.FC = observer(() => {
   const classes = useStyles();
-  const {
-    dataStore: { search, getSearch },
-  } = useStore();
+
+  const getSearch = useAppSelector((state) => state.Ui.search);
 
   const [recentComics, setRecentComics] = useState<any>([]);
   const [searchedComics, setSearchedComics] = useState<any>([]);
@@ -34,14 +33,12 @@ export const App: React.FC = observer(() => {
 
   const fetchRecentComics = async () => {
     setLoading(true);
-
     setRecentComics(await RecentComicsApi());
-
     setLoading(false);
   };
 
   const fetchSearchedComics = useCallback(async () => {
-    if (search !== "" || search === null) {
+    if (getSearch !== "" || getSearch === null) {
       setLoading(true);
       setSearchedComics(
         await SearchSeriesApi(getSearch).finally(() => {
@@ -49,16 +46,15 @@ export const App: React.FC = observer(() => {
         })
       );
     }
-  }, [getSearch, search]);
-
-  // useEffect(() => {
-  //   fetchRecentComics();
-  // }, []);
+  }, [getSearch]);
 
   useEffect(() => {
     fetchRecentComics();
+  }, []);
+
+  useEffect(() => {
     fetchSearchedComics();
-  }, [fetchSearchedComics]);
+  }, [getSearch]);
 
   return (
     <>
@@ -69,13 +65,13 @@ export const App: React.FC = observer(() => {
       </Grid>
       <Grid className={classes.comicContainer} item xs={12}>
         {loading && <LoadingSpinner />}
-        {!search ? (
+        {!getSearch ? (
           <ListView comics={recentComics} />
         ) : (
           <ListView comics={searchedComics} />
         )}
+        <ListView comics={recentComics} />
       </Grid>
-      {/* <ListView /> */}
     </>
   );
 });

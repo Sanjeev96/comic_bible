@@ -7,7 +7,8 @@ import {
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import SearchIcon from "@mui/icons-material/Search";
-import { useStore } from "../services/state/hooks/useStore";
+import { useDispatch } from "react-redux";
+import { setSearch } from "../services/state/uiSlice";
 
 const useStyles = makeStyles(() => ({
   navbarTitle: {
@@ -28,16 +29,14 @@ const useStyles = makeStyles(() => ({
 export const Header: React.FC = () => {
   const classes = useStyles();
 
-  const {
-    dataStore: { setSearch },
-  } = useStore();
+  const dispatchSearch = useDispatch();
 
   const formikSubmit = useFormik({
     initialValues: {
       search: "",
     },
     onSubmit: (values) => {
-      return setSearch(values.search);
+      dispatchSearch(setSearch(values.search));
     },
   });
 
