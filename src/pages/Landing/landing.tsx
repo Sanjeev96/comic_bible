@@ -10,12 +10,6 @@ import { useAppSelector } from "../../services/state/hooks/store";
 import { setLoad } from "../../services/state/uiSlice";
 
 const useStyles = makeStyles(() => ({
-  navbarContainer: {
-    padding: "0px 0px 15px 5px",
-    backgroundColor: "#2E2E2E",
-    color: "#FFF",
-    background: "linear-gradient(to left, #5C5C5C, #171717) right",
-  },
   comicContainer: {
     justifyContent: "center",
     textAlign: "center",
@@ -63,11 +57,7 @@ export const Landing: React.FC = observer(() => {
 
   return (
     <>
-      <Grid container xs={12}>
-        <Grid xs={12} className={classes.navbarContainer} item>
-          <Header />
-        </Grid>
-      </Grid>
+      <Grid container xs={12}></Grid>
       <Grid className={classes.comicContainer} item xs={12}>
         {!getSearch ? (
           <ListView comics={recentComics} loader={getLoad} />

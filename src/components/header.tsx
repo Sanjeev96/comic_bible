@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { setSearch } from "../services/state/uiSlice";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   navbarTitle: {
@@ -44,10 +45,17 @@ export const Header: React.FC = () => {
     <form id="searchForm" onSubmit={formikSubmit.handleSubmit}>
       <Grid className={classes.navbarCanvas} container alignItems="center">
         <Grid style={{ textAlign: "center" }} item xs={4} md={3}>
-          <Typography>Comic Bible</Typography>
+          <Link style={{ color: "white", textDecoration: "none" }} to={"./"}>
+            <Typography>Comic Bible</Typography>
+          </Link>
         </Grid>
         <Grid style={{ textAlign: "center" }} item xs={4} md={3}>
-          <Typography>My comic list</Typography>
+          <Link
+            style={{ color: "white", textDecoration: "none" }}
+            to={"/notes"}
+          >
+            <Typography>My comic list</Typography>
+          </Link>
         </Grid>
         <Grid style={{ textAlign: "center" }} item xs={4} md={3}>
           <Typography>About us</Typography>
