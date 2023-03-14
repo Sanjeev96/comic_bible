@@ -1,6 +1,7 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import { ComicDataSetModal } from "../models/marvelApi.model";
+import { LoadingSpinner } from "./loadingSpinnner";
 
 const useStyles = makeStyles(() => ({
   comicImage: {
@@ -19,14 +20,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const ListView: React.FC<any> = (props: {
+export const ListView: React.FC<{
   comics: ComicDataSetModal[];
-}) => {
+  loader: boolean;
+}> = (props) => {
   const comics = props.comics;
   const classes = useStyles();
 
   return (
     <>
+      {props.loader && <LoadingSpinner />}
       <Grid container>
         {comics.map((comic: ComicDataSetModal) => (
           <Grid key={comic.id} item xs={12} sm={6} md={4}>
