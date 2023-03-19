@@ -5,6 +5,9 @@ import { LoadingSpinner } from "./loadingSpinnner";
 
 const useStyles = makeStyles(() => ({
   comicImage: {
+    display: "block",
+    margin: "0 auto",
+
     borderRadius: "8px",
     boxShadow:
       "-30px 30px 30px -5px rgba(255,255,0,0.3), inset 0px 0px 15px rgba(0,0,0,1);",
