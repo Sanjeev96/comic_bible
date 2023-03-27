@@ -50,7 +50,7 @@ export const ListView: React.FC<{
                 ? (comic.dates[0].date = new Date().toLocaleDateString("en-GB"))
                 : "SALE DATE TBD"}
             </Typography>
-            <ToggleIssue />
+            <ToggleIssue {...comic} />
           </Grid>
         ))}
       </Grid>

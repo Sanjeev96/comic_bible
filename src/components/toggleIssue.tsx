@@ -1,14 +1,18 @@
-import { Grid } from "@material-ui/core";
-import { Label } from "@mui/icons-material";
 import { useState } from "react";
+import { ComicDataSetModal } from "../models/marvelApi.model";
 
-export const ToggleIssue: React.FC = () => {
+
+
+export const ToggleIssue: React.FC<ComicDataSetModal | null> = (comic) => {
 const [save, setSaveStatus] = useState(true)
 
 
   const handleToggle = () => {
     setSaveStatus(!save)
-    console.log(save);
+    save?  comic : comic = null;
+    console.log(save, comic);
+    
+
     
   };
 
