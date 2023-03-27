@@ -1,9 +1,15 @@
 import { Grid } from "@material-ui/core";
 import { Label } from "@mui/icons-material";
+import { useState } from "react";
 
 export const ToggleIssue: React.FC = () => {
+const [save, setSaveStatus] = useState(true)
+
+
   const handleToggle = () => {
-    console.log("toggled");
+    setSaveStatus(!save)
+    console.log(save);
+    
   };
 
   return (
