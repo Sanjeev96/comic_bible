@@ -2,6 +2,7 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import { ComicDataSetModal } from "../models/marvelApi.model";
 import { LoadingSpinner } from "./loadingSpinnner";
+import { ToggleIssue } from "./toggleIssue";
 
 const useStyles = makeStyles(() => ({
   comicImage: {
@@ -42,12 +43,14 @@ export const ListView: React.FC<{
               src={comic.thumbnail.path + "/portrait_xlarge.jpg"}
               alt="No Cover yet"
             />
-            <Typography>{comic.title}</Typography>
-            <Typography color="inherit">
+
+            <Typography className={"text-white"}>{comic.title}</Typography>
+            <Typography className={"text-white"}>
               {comic.dates[0].type === "onsaleDate"
                 ? (comic.dates[0].date = new Date().toLocaleDateString("en-GB"))
                 : "SALE DATE TBD"}
             </Typography>
+            <ToggleIssue />
           </Grid>
         ))}
       </Grid>
