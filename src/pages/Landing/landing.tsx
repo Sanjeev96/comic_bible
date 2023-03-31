@@ -1,13 +1,14 @@
 import { Box, Grid, makeStyles } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Header } from "../../components/header";
 import { ListView } from "../../components/listView";
-import { LoadingSpinner } from "../../components/loadingSpinnner";
 import { RecentComicsApi, SearchSeriesApi } from "../../services/marvelData";
-import { useAppSelector } from "../../services/state/hooks/store";
+import { AppDispatch, RootState, useAppSelector } from "../../services/state/hooks/store";
 import { setLoad } from "../../services/state/uiSlice";
+import { recentComicsApi } from "../../services/state/dataSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const useStyles = makeStyles(() => ({
   comicContainer: {
@@ -19,37 +20,45 @@ const useStyles = makeStyles(() => ({
 
 export const Landing: React.FC = observer(() => {
   const classes = useStyles();
+  const dispatch = useDispatch<AppDispatch>();
+  const apiData = useSelector((state: RootState) => state.Data.recentComics);
+  const isLoading = useSelector((state: RootState) => state.Data.isLoading);
+  const error = useSelector((state: RootState) => state.Data.error);
+
 
   const getSearch = useAppSelector((state) => state.Ui.search);
   const getLoad = useAppSelector((state) => state.Ui.loading);
 
-  const dispatchLoad = useDispatch();
 
   const [recentComics, setRecentComics] = useState<any>([]);
   const [searchedComics, setSearchedComics] = useState<any>([]);
 
-  const fetchRecentComics = async () => {
-    dispatchLoad(setLoad(true));
-    setRecentComics(
-      await RecentComicsApi().finally(() => dispatchLoad(setLoad(false)))
-    );
-  };
+  // const fetchRecentComics = async() => {
+  //   // dispatch(setLoad(true));
+  //   // setRecentComics(
+  //   //   await RecentComicsApi().finally(() => dispatch(setLoad(false)))
+  //   // );
+  // };
 
   const fetchSearchedComics = useCallback(async () => {
-    dispatchLoad(setLoad(true));
+    dispatch(setLoad(true));
 
     if (getSearch !== "" || getSearch === null) {
       setSearchedComics(
         await SearchSeriesApi(getSearch).finally(() =>
-          dispatchLoad(setLoad(false))
+        dispatch(setLoad(false))
         )
       );
     }
   }, [getSearch]);
 
   useEffect(() => {
-    fetchRecentComics();
-  }, []);
+    dispatch(recentComicsApi());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log({apiData});
+  }, [apiData]);
 
   useEffect(() => {
     fetchSearchedComics();

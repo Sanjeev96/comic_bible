@@ -74,3 +74,14 @@ export const RecentComicsApi = async () => {
     console.warn("call for recent comics successful");
   }
 };
+
+export const RecentComicsUrl = (): string => {
+  let currentDate = new Date().toLocaleDateString("en-CA");
+  let date = new Date();
+  date.setDate(date.getDate() - 730);
+  let dateMinusTwoYears = date.toLocaleDateString("en-CA");
+
+  const recentComicsUrl = `/comics?&format=comic&formatType=comic&noVariants=true&dateRange=${dateMinusTwoYears}%2C${currentDate}&orderBy=-onsaleDate`;
+  const requestUrl = baseUrl + recentComicsUrl + key;
+  return requestUrl
+};
