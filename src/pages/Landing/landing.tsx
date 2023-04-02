@@ -24,14 +24,13 @@ const useStyles = makeStyles(() => ({
 export const Landing: React.FC = observer(() => {
   const classes = useStyles();
   const dispatch = useDispatch<AppDispatch>();
-  const apiData = useSelector((state: RootState) => state.Data.recentComics);
-  const isLoading = useSelector((state: RootState) => state.Data.isLoading);
-  const error = useSelector((state: RootState) => state.Data.error);
+  const { recentComics, isLoading } = useSelector(
+    (state: RootState) => state.Data
+  );
 
   const getSearch = useAppSelector((state) => state.Ui.search);
   const getLoad = useAppSelector((state) => state.Ui.loading);
 
-  const [recentComics, setRecentComics] = useState<any>([]);
   const [searchedComics, setSearchedComics] = useState<any>([]);
 
   const fetchSearchedComics = useCallback(async () => {
@@ -49,10 +48,6 @@ export const Landing: React.FC = observer(() => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(apiData);
-  }, [apiData]);
-
-  useEffect(() => {
     fetchSearchedComics();
   }, [getSearch]);
 
@@ -60,11 +55,12 @@ export const Landing: React.FC = observer(() => {
     <>
       <Grid container xs={12}></Grid>
       <Grid className={classes.comicContainer} item xs={12}>
-        {!getSearch ? (
+        {JSON.stringify({ recentComics })}
+        {/* {!getSearch ? (
           <ListView comics={recentComics} loader={false} />
         ) : (
           <ListView comics={searchedComics} loader={getLoad} />
-        )}
+        )} */}
       </Grid>
     </>
   );
