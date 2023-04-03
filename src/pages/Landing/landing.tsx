@@ -55,7 +55,7 @@ export const Landing: React.FC = observer(() => {
     <>
       <Grid container xs={12}></Grid>
       <Grid className={classes.comicContainer} item xs={12}>
-        {JSON.stringify({ recentComics })}
+        <ListView comics={recentComics} />
         {/* {!getSearch ? (
           <ListView comics={recentComics} loader={false} />
         ) : (
