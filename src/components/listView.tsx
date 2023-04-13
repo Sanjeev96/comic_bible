@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
 
 export const ListView: React.FC<{
   comics: ComicDataSetModal[];
-  loader: boolean;
+  loader?: boolean;
 }> = (props) => {
   const comics = props.comics;
   const classes = useStyles();
@@ -46,8 +46,11 @@ export const ListView: React.FC<{
 
             <Typography className={"text-white"}>{comic.title}</Typography>
             <Typography className={"text-white"}>
+              {/* {comic.dates[0].type === "onsaleDate"
+                ? comic.dates[0].date
+                : "SALE DATE TBD"} */}
               {comic.dates[0].type === "onsaleDate"
-                ? (comic.dates[0].date = new Date().toLocaleDateString("en-GB"))
+                ? new Date(comic.dates[0].date).toLocaleDateString("en-GB")
                 : "SALE DATE TBD"}
             </Typography>
             <ToggleIssue {...comic} />

@@ -1,13 +1,18 @@
 import { Box, Grid, makeStyles } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Header } from "../../components/header";
+import { useCallback, useEffect } from "react";
 import { ListView } from "../../components/listView";
-import { LoadingSpinner } from "../../components/loadingSpinnner";
-import { RecentComicsApi, SearchSeriesApi } from "../../services/marvelData";
-import { useAppSelector } from "../../services/state/hooks/store";
+import {
+  AppDispatch,
+  RootState,
+  useAppSelector,
+} from "../../services/state/hooks/store";
 import { setLoad } from "../../services/state/uiSlice";
+import {
+  recentComicsApi,
+  searchedComicsApi,
+} from "../../services/state/dataSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   comicContainer: {
@@ -19,37 +24,25 @@ const useStyles = makeStyles(() => ({
 
 export const Landing: React.FC = observer(() => {
   const classes = useStyles();
+  const dispatch = useDispatch<AppDispatch>();
+  const { recentComics, searchedComics, isLoading } = useSelector(
+    (state: RootState) => state.Data
+  );
 
   const getSearch = useAppSelector((state) => state.Ui.search);
   const getLoad = useAppSelector((state) => state.Ui.loading);
 
-  const dispatchLoad = useDispatch();
-
-  const [recentComics, setRecentComics] = useState<any>([]);
-  const [searchedComics, setSearchedComics] = useState<any>([]);
-
-  const fetchRecentComics = async () => {
-    dispatchLoad(setLoad(true));
-    setRecentComics(
-      await RecentComicsApi().finally(() => dispatchLoad(setLoad(false)))
-    );
-  };
-
   const fetchSearchedComics = useCallback(async () => {
-    dispatchLoad(setLoad(true));
+    dispatch(setLoad(true));
 
     if (getSearch !== "" || getSearch === null) {
-      setSearchedComics(
-        await SearchSeriesApi(getSearch).finally(() =>
-          dispatchLoad(setLoad(false))
-        )
-      );
+      await dispatch(searchedComicsApi(getSearch));
     }
   }, [getSearch]);
 
   useEffect(() => {
-    fetchRecentComics();
-  }, []);
+    dispatch(recentComicsApi());
+  }, [dispatch]);
 
   useEffect(() => {
     fetchSearchedComics();
@@ -60,9 +53,9 @@ export const Landing: React.FC = observer(() => {
       <Grid container xs={12}></Grid>
       <Grid className={classes.comicContainer} item xs={12}>
         {!getSearch ? (
-          <ListView comics={recentComics} loader={getLoad} />
+          <ListView comics={recentComics} loader={isLoading} />
         ) : (
-          <ListView comics={searchedComics} loader={getLoad} />
+          <ListView comics={searchedComics} loader={isLoading} />
         )}
       </Grid>
     </>

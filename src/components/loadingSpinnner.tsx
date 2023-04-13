@@ -33,7 +33,7 @@ export const LoadingSpinner: React.FC = () => {
     <>
       <Box className={classes.overlayContainer}>
         <Typography className={classes.loadTxt}>
-          <h2>Loading...</h2>
+          Loading...
         </Typography>
         <CircularProgress
           style={{ color: "rgba(255, 255, 0, 0.7)" }}

@@ -11,7 +11,7 @@ export interface DataModel {
 }
 
 export interface ResultsModel {
-  results: ComicDataSetModal[] ;
+  results: ComicDataSetModal[];
 }
 
 export interface ComicDataSetModal {
