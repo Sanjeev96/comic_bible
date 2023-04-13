@@ -1,16 +1,17 @@
 import { Box, Grid, makeStyles } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
-import { useCallback, useEffect, useState } from "react";
-import { Header } from "../../components/header";
+import { useCallback, useEffect } from "react";
 import { ListView } from "../../components/listView";
-import { RecentComicsApi, SearchSeriesApi } from "../../services/marvelData";
 import {
   AppDispatch,
   RootState,
   useAppSelector,
 } from "../../services/state/hooks/store";
 import { setLoad } from "../../services/state/uiSlice";
-import { recentComicsApi } from "../../services/state/dataSlice";
+import {
+  recentComicsApi,
+  searchedComicsApi,
+} from "../../services/state/dataSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles(() => ({
@@ -24,22 +25,18 @@ const useStyles = makeStyles(() => ({
 export const Landing: React.FC = observer(() => {
   const classes = useStyles();
   const dispatch = useDispatch<AppDispatch>();
-  const { recentComics, isLoading } = useSelector(
+  const { recentComics, searchedComics, isLoading } = useSelector(
     (state: RootState) => state.Data
   );
 
   const getSearch = useAppSelector((state) => state.Ui.search);
   const getLoad = useAppSelector((state) => state.Ui.loading);
 
-  const [searchedComics, setSearchedComics] = useState<any>([]);
-
   const fetchSearchedComics = useCallback(async () => {
     dispatch(setLoad(true));
 
     if (getSearch !== "" || getSearch === null) {
-      setSearchedComics(
-        await SearchSeriesApi(getSearch).finally(() => dispatch(setLoad(false)))
-      );
+      await dispatch(searchedComicsApi(getSearch));
     }
   }, [getSearch]);
 
@@ -55,12 +52,11 @@ export const Landing: React.FC = observer(() => {
     <>
       <Grid container xs={12}></Grid>
       <Grid className={classes.comicContainer} item xs={12}>
-        <ListView comics={recentComics} />
-        {/* {!getSearch ? (
-          <ListView comics={recentComics} loader={false} />
+        {!getSearch ? (
+          <ListView comics={recentComics} loader={isLoading} />
         ) : (
-          <ListView comics={searchedComics} loader={getLoad} />
-        )} */}
+          <ListView comics={searchedComics} loader={isLoading} />
+        )}
       </Grid>
     </>
   );
