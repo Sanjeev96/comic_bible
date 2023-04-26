@@ -25,6 +25,5 @@ yarn-error.log*
 # Ignore the dist folder
 dist/
 
-# Ignore the package-lock.json file
-package-lock.json
+
 
