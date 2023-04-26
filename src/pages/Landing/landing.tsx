@@ -1,5 +1,4 @@
 import { Box, Grid, makeStyles } from "@material-ui/core";
-import { observer } from "mobx-react-lite";
 import { useCallback, useEffect } from "react";
 import { ListView } from "../../components/listView";
 import {
@@ -22,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const Landing: React.FC = observer(() => {
+export const Landing: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch<AppDispatch>();
   const { recentComics, searchedComics, isLoading } = useSelector(
@@ -60,4 +59,4 @@ export const Landing: React.FC = observer(() => {
       </Grid>
     </>
   );
-});
+};
