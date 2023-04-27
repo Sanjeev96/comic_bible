@@ -16,7 +16,7 @@ jobs:
           node-version: "16.x"
 
       - name: Install Dependencies
-        run: npm install --legacy-peer-deps --force
+        run: npm install
 
       - name: Build and Deploy
         env:
