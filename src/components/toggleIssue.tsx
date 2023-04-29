@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ComicDataSetModal } from "../models/marvelApi.model";
 
-export const ToggleIssue: React.FC<ComicDataSetModal | null> = (comic) => {
+export const ToggleIssue: React.FC<ComicDataSetModal | null> = (comic:ComicDataSetModal | null) => {
   const [save, setSaveStatus] = useState(true);
 
   const handleToggle = () => {
