@@ -10,20 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: install dependencies and run build
         uses: actions/setup-node@v3
         with:
           node-version: "16.x"
+      - run: npm ci
+      - run: npm run build
 
-      - name: Install Dependencies
-        run: npm install
 
-      - name: Build and Deploy
-        env:
-          NODE_ENV: production
-        run: npm run build
-
-      - name: Serve
-        env:
-          NODE_ENV: production
-        run: npm run serve
